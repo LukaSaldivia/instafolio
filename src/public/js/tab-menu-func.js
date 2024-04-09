@@ -27,5 +27,4 @@ ipc.on('window:restored', () => { changeStateMaxWindow(false) })
 showHideLeft.addEventListener('click', () => {
   isLeftMenuOpened = !isLeftMenuOpened
   leftMenu.classList.toggle('active', isLeftMenuOpened)
-  console.log(isLeftMenuOpened);
 })
