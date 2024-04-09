@@ -1,0 +1,19 @@
+{
+  "name": "instafolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^29.2.0"
+  },
+  "dependencies": {
+    "ejs-electron": "^3.0.0",
+    "path": "^0.12.7"
+  }
+}

@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+:root{
+  --clr-background-light: hsl(252, 12%, 16%);
+  --clr-background: hsl(252, 6%, 8%);
+  --clr-background-similar: hsl(252, 10%, 10%);
+  --clr-primary: hsl(0, 69%, 42%);
+  --clr-text: hsl(0, 0%, 67%);
+  --clr-header: hsl(0,0%,80%);
+  --clr-gray: hsl(0, 0%, 32%);
+
+  --clr-top-bar: hsl(225, 13%, 12%);
+  --clr-btn-top-bar-hover: hsl(225, 6%, 6%);
+  --size-button-top-bar: 40px;
+
+  --fs-100: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
+  --fs-200: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
+  --fs-300: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+  --fs-400: clamp(1.35rem, 1.2761rem + 0.3696vw, 1.5625rem);
+  --fs-500: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
+  --fs-600: clamp(1.9438rem, 1.7707rem + 0.8652vw, 2.4413rem);
+  --fs-700: clamp(2.3325rem, 2.0823rem + 1.2511vw, 3.0519rem);
+  --fs-800: clamp(2.7994rem, 2.4461rem + 1.7663vw, 3.815rem);
+
+
+  --ff-base: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+  --ff-header : 'Poppins',"Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+}
+
+*,::before,::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 0;
+
+  font-family: var(--ff-base);
+}
+
+body{
+  background-image: linear-gradient(var(--clr-background-similar) 2px, transparent 2px), linear-gradient(to right, var(--clr-background-similar) 2px, transparent 2px);
+  background-size: 50px 50px;
+  background-color: var(--clr-background);
+  background-position: center center;
+  font-size: var(--fs-200);
+  color: var(--clr-text);
+}
+
+p,a{
+  font-size: 1rem;
+  text-wrap: pretty;
+  color: var(--clr-text);
+}
+
+input, button {
+  border-style: none;
+  color: var(--clr-text);
+}
+
+:is(input, button):focus{
+   outline-style: none;
+}
+
+input{
+  caret-color: var(--clr-primary);
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: var(--ff-header);
+  text-wrap: balance;
+  color: var(--clr-header);
+}
+
+
+/* TAB-MENU */
+#tab-menu{
+  display: flex;
+  justify-content: start;
+  height: var(--size-button-top-bar);
+  background-color: var(--clr-top-bar);
+  align-items: stretch;
+  border-bottom: 2px solid var(--clr-gray);
+  -webkit-user-select: none;
+
+
+
+  > .title{
+    display: flex;
+    align-items: center;
+    flex-grow: 9;
+    padding-left: 1rem;
+    -webkit-app-region: drag;
+  }
+
+  > .btns{
+    flex-grow: 0;
+    display: flex;
+    height: 100%;
+    align-items: stretch;
+    flex-shrink: var(--size-button-top-bar);
+    
+    
+    > button{
+      display: block;
+      background-color: var(--clr-top-bar);
+      width: var(--size-button-top-bar);
+      display: grid;
+      place-content: center;
+
+      &#maxWindow{
+        > img:last-child{
+          display: none;
+        }
+
+        > img:first-child{
+          display: block;
+        }
+      }
+      &#maxWindow.active{
+        > img:last-child{
+          display: block;
+        }
+
+        > img:first-child{
+          display: none;
+        }
+      }
+      
+
+      &:hover{
+        background-color: var(--clr-btn-top-bar-hover);
+      }
+
+      &:active{
+        background-color: var(--clr-primary);
+      }
+    }
+  }
+}
