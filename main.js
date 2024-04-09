@@ -3,7 +3,7 @@ const path = require('path')
 const ejse = require('ejs-electron')
 const ipc = ipcMain
 
-function createWindow(){
+function createWindow(filename = 'index', isMain = false){
   const win = new BrowserWindow({
     width: 1200,
     height: 680,
@@ -16,11 +16,14 @@ function createWindow(){
       devTools: true
     }
   })
-  win.loadFile(path.join(__dirname, 'src','views','index.ejs'))
+  win.loadFile(path.join(__dirname, 'src','views',`${filename}.ejs`));
 
   // ACTIONS
   ipc.on('window:close', ()=> {
-    win.close()
+    if (isMain)
+      app.quit();
+    else
+      win.close()
   })
   ipc.on('window:minimize', ()=> {
     win.minimize()
@@ -43,10 +46,10 @@ function createWindow(){
 }
 
 app.whenReady().then(()=> {
-  createWindow()
+  createWindow('index',true)
 
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createWindow('index',true)
   })
 
   app.on('window-all-closed', () => {

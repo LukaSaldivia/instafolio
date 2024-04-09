@@ -3,7 +3,7 @@
 :root{
   --clr-background-light: hsl(252, 12%, 16%);
   --clr-background: hsl(252, 6%, 8%);
-  --clr-background-similar: hsl(252, 10%, 10%);
+  --clr-background-similar: hsl(252, 10%, 9%);
   --clr-primary: hsl(0, 69%, 42%);
   --clr-text: hsl(0, 0%, 67%);
   --clr-header: hsl(0,0%,80%);
@@ -43,6 +43,7 @@ body{
   background-position: center center;
   font-size: var(--fs-200);
   color: var(--clr-text);
+  min-height: 100vh;
 }
 
 p,a{
@@ -134,5 +135,24 @@ h1,h2,h3,h4,h5,h6{
         background-color: var(--clr-primary);
       }
     }
+  }
+}
+
+#left-mainContainer{
+  display: flex;
+  height: calc(100vh - var(--size-button-top-bar));
+  gap: .5rem;
+}
+
+#leftMenu{
+  display: block;
+  height: 100;
+  width: 0;
+  overflow: hidden;
+  background-color: var(--clr-top-bar);
+  transition: width 300ms ease-out;
+
+  &.active{
+    width: 200px;
   }
 }

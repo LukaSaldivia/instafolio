@@ -1,11 +1,12 @@
 const { ipcRenderer } = require('electron')
 const ipc = ipcRenderer
 const maxWindow = document.querySelector('#maxWindow')
+var isLeftMenuOpened = false
+
 
 function changeStateMaxWindow(bool){
-  const titles = ['Ampliar', 'Restaurar']
   maxWindow.classList.toggle('active',bool)
-  maxWindow.title = titles[+bool] + ' ventana'
+  maxWindow.title = ['Ampliar', 'Restaurar'][+bool] + ' ventana'
 }
 
 closeWindow.addEventListener('click', () => {
@@ -22,3 +23,9 @@ maxWindow.addEventListener('click', () => {
 
 ipc.on('window:maximized', () => { changeStateMaxWindow(true) })
 ipc.on('window:restored', () => { changeStateMaxWindow(false) })
+
+showHideLeft.addEventListener('click', () => {
+  isLeftMenuOpened = !isLeftMenuOpened
+  leftMenu.classList.toggle('active', isLeftMenuOpened)
+  console.log(isLeftMenuOpened);
+})
