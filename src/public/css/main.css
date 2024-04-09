@@ -107,6 +107,11 @@ h1,h2,h3,h4,h5,h6{
       display: grid;
       place-content: center;
 
+      > img{
+        width: 15px;
+        
+      }
+
       &#maxWindow{
         > img:last-child{
           display: none;
