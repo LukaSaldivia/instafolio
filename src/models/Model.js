@@ -81,10 +81,9 @@ class Model {
   add(body){
     let data = Model.getData(this.jsonObject)
     data.push(body)
-    if (!allUniques(data,this.idAlias)) {
-      data.pop()
+    if (allUniques(data,this.idAlias)) {
+      Model.updateData(data,this.jsonObject)
     }
-    Model.updateData(data,this.jsonObject)
   }
 
 }
