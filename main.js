@@ -1,11 +1,15 @@
 const createWindow = require('./src/libs/createWindow');
 
 const { app, BrowserWindow, ipcMain } = require('electron')
+// const empresas = require('./src/controllers/empresas.controller')
 
 
 app.whenReady().then(()=> {
+  // createWindow(['components','_table'],true, {
+  //   table : empresas.table()
+  // })
   createWindow(['index'],true, {
-    title : 'Hola mundito'
+    title : 'Este es el índice'
   })
 
   app.on('activate', () => {

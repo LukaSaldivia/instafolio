@@ -1,4 +1,5 @@
 const { Model } = require("../models/Model");
+const Tablizator = require("../libs/Tablizator")
 
 class Controller {
   constructor(model = new Model()){
@@ -19,6 +20,13 @@ class Controller {
 
   add(body){
     this.model.add(body)
+  }
+
+  
+  table(){
+    let t = new Tablizator(this.get(),this.model.idAlias)
+
+    return t.getTable()
   }
 }
 

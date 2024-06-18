@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { groupBy , allUniques, getIndex } = require('../libs/anner_arrays')
 
+
 class Model {
 
 
@@ -85,6 +86,7 @@ class Model {
       Model.updateData(data,this.jsonObject)
     }
   }
+
 
 }
 

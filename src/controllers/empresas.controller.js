@@ -9,3 +9,5 @@ controller.add({'nombre' : 'Quesada'})
 
 
 console.log(controller.get())
+
+module.exports = controller
