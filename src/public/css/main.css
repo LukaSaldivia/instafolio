@@ -107,9 +107,13 @@ h1,h2,h3,h4,h5,h6{
       display: grid;
       place-content: center;
 
+      &:hover > img{
+        opacity: 1;
+      }
+
       > img{
         width: 15px;
-        
+        opacity: .5;
       }
 
       &#maxWindow{

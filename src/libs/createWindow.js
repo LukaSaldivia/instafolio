@@ -3,10 +3,10 @@ const path = require('path')
 const ejse = require('ejs-electron')
 const ipc = ipcMain
 
-function createWindow(filename = ['index'], isMain = false){
+function createWindow(filename = ['index'], isMain = false, data = {}){
   const win = new BrowserWindow({
-    width: 1200,
-    height: 680,
+    width: 940,
+    height: 560,
     minWidth: 940,
     minHeight: 560,
     frame: false,
@@ -16,7 +16,17 @@ function createWindow(filename = ['index'], isMain = false){
       devTools: true
     }
   })
-  win.loadFile(path.join(__dirname, '..','views',`${filename.join(',')}.ejs`));
+
+
+  const basePath = `${path.join(__dirname,'..', 'public')}`;
+
+  let file = filename.pop() 
+  ejse.data({
+    basePath,
+    data
+  })
+  win.loadFile(path.join(__dirname, '..','views',...filename,`${file}.ejs`));
+  
 
   // ACTIONS
   ipc.on('window:close', ()=> {

@@ -3,7 +3,8 @@ const model = require('../models/empresas.model.js')
 
 let controller = new Controller(model)
 
-controller.add({'nombre' : 'Luka'})
+controller.add({'nombre' : 'Emezeta'})
+controller.add({'nombre' : 'Quesada'})
 // controller.delete('Luka')
 
 
