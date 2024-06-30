@@ -1,4 +1,4 @@
-function groupBy(arr = [], fn, params) {
+function groupBy(arr = [], fn = (item,params) => item, params) {
   let groups = {}
 
   for(e of arr){
@@ -33,7 +33,5 @@ function getIndex(arr=[],id,idAlias = "id"){
 
   return map[id]
 }
-
-
 
 module.exports = { groupBy, allUniques, getIndex}

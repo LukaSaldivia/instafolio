@@ -1,0 +1,14 @@
+[
+  {
+    "nombre": "Emezeta",
+    "categoria": "Fiambres",
+    "foto": false,
+    "color": "#b52121"
+  },
+  {
+    "nombre": "Quesada",
+    "categoria": "Lácteos",
+    "foto": false,
+    "color": "#b52121"
+  }
+]

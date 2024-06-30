@@ -7,46 +7,46 @@ class Model {
 
 
   static DATA = {}
-  static readData = () => {
-    Model.DATA = JSON.parse(fs.readFileSync(path.join(__dirname,'data.json'),'utf-8'))    
+  static readData = (json) => {
+    Model.DATA = JSON.parse(fs.readFileSync(path.join(__dirname,'jsons',`${json}.json`),'utf8'))   
   }
 
   static emptyData = () => {
-    Model.DATA = {}
+    Model.DATA = []
   }
 
-  static getData = (jsonObject) => {
-    Model.readData()
-    let res = Model.DATA[jsonObject]
-    Model.emptyData()
-    return res
-  }
-
-  static getRaw = () => {
-    Model.readData()
+  static getData = (json) => {
+    Model.readData(json)
     let res = Model.DATA
     Model.emptyData()
     return res
   }
 
-  static postData = () => {
-    fs.writeFileSync(path.join(__dirname,'data.json'),JSON.stringify(Model.DATA))
+  static getRaw = (json) => {
+    Model.readData(json)
+    let res = Model.DATA
+    Model.emptyData()
+    return res
+  }
+
+  static postData = (json) => {
+    fs.writeFileSync(path.join(__dirname,'jsons',`${json}.json`),JSON.stringify(Model.DATA),'utf8')
     Model.emptyData()
   }
 
-  static updateData = (newer, jsonObject) => {
-    Model.getRaw()
-    Model.DATA[jsonObject] = newer
-    Model.postData()
+  static updateData = (newer, json) => {
+    Model.getRaw(json)
+    Model.DATA = newer
+    Model.postData(json)
   }
 
-  constructor(jsonObject, idAlias = 'id'){
-    this.jsonObject = jsonObject
+  constructor(json, idAlias = 'id'){
+    this.json = json
     this.idAlias = idAlias
   }
 
   get(id = ''){
-    let data = Model.getData(this.jsonObject)
+    let data = Model.getData(this.json)
 
     if (id) {
       let map = {}
@@ -62,28 +62,28 @@ class Model {
   }
 
   edit(id="", body){
-    let data = Model.getData(this.jsonObject)
+    let data = Model.getData(this.json)
     let index = getIndex(data,id, this.idAlias)
     if (index) {
       Object.assign(data[index],body)
-      Model.updateData(data,this.jsonObject)
+      Model.updateData(data,this.json)
     }
   }
 
   delete(id=""){
-    let data = Model.getData(this.jsonObject)
+    let data = Model.getData(this.json)
     let index = getIndex(data,id, this.idAlias)
     if (index) {
       data.splice(index,1)
-      Model.updateData(data,this.jsonObject)
+      Model.updateData(data,this.json)
     }
   }
 
   add(body){
-    let data = Model.getData(this.jsonObject)
+    let data = Model.getData(this.json)
     data.push(body)
     if (allUniques(data,this.idAlias)) {
-      Model.updateData(data,this.jsonObject)
+      Model.updateData(data,this.json)
     }
   }
 

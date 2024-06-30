@@ -1,7 +1,7 @@
 const createWindow = require('./src/libs/createWindow');
 
 const { app, BrowserWindow, ipcMain } = require('electron')
-// const empresas = require('./src/controllers/empresas.controller')
+const empresas = require('./src/controllers/empresas.controller')
 
 
 app.whenReady().then(()=> {
@@ -17,7 +17,7 @@ app.whenReady().then(()=> {
   })
 
   app.on('window-all-closed', () => {
-    if (process.platform!== 'darwin') app.quit()
+    if (process.platform !== 'darwin') app.quit()
   })
 
 })

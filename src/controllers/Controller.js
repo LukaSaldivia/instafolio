@@ -1,9 +1,13 @@
 const { Model } = require("../models/Model");
 const Tablizator = require("../libs/Tablizator")
+const Paginator = require("../libs/Paginator");
+const { groupBy } = require("../libs/anner_arrays");
 
 class Controller {
-  constructor(model = new Model()){
+  constructor(model = new Model(), tablizator = new Tablizator()){
     this.model = model
+    this.tablizator = tablizator
+    this.tablizator.idAlias = this.model.idAlias
   }
 
   get(id = ""){
@@ -23,10 +27,21 @@ class Controller {
   }
 
   
-  table(){
-    let t = new Tablizator(this.get(),this.model.idAlias)
+  table(page = 1){
 
-    return t.getTable()
+    let fn = (item,params) => true
+
+    let filtered = []
+    // filtrar
+    filtered = groupBy(this.get(),fn, {})[true]
+
+    // paginar
+    let p = new Paginator()
+    let paginated = p.paginate(filtered,page)
+
+    // tablizar
+    return this.tablizator.getTable(paginated)
+
   }
 }
 

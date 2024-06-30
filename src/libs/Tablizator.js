@@ -1,13 +1,14 @@
 class Tablizator{
-  constructor(data, idAlias = 'id',fn = (key,value) => value){
-    this.data = data
-    this.idAlias = idAlias
-    this.fn = fn
+  constructor(){
+    this.data = []
+    this.idAlias = 'id'
+    this.fnHeader = (key) => key
+    this.fnBody = (key,value) => value
   }
 
-  getTable(){
-    const thead = this.getTHead()
-    const tbody = this.getTBody()
+  getTable(data){
+    const thead = this.getTHead(data)
+    const tbody = this.getTBody(data)
 
     const table = `
     <table>
@@ -22,13 +23,13 @@ class Tablizator{
     return table.trim()
   }
 
-  getTHead(){
-    let keys = Object.keys(this.data[0])
+  getTHead(data){
+    let keys = Object.keys(data[0])
     let hrs = ''
 
     for (const key of keys) {
       if (key.toLowerCase() != 'id') {
-        hrs+= `<th>${key}</th>`
+        hrs+= `<th>${this.fnHeader(key)}</th>`
       }
     }
 
@@ -38,15 +39,15 @@ class Tablizator{
 
   }
 
-  getTBody(){
+  getTBody(data){
     let trs = ''
     let tr = ''
 
-    for(const obj of this.data){
+    for(const obj of data){
       tr = '<tr>'
       for (const [key,value] of Object.entries(obj)) {
         if (key.toLowerCase() != 'id') {
-          tr+=`<td>${this.fn(key,value)}</td>`
+          tr+=`<td>${this.fnBody(key,value)}</td>`
         }
       }
       tr+=`<td>${obj[this.idAlias]}</td>` // id del obj

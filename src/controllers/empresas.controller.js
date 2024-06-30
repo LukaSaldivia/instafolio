@@ -1,13 +1,7 @@
 const Controller  = require("./Controller.js");
 const model = require('../models/empresas.model.js')
+const Tablizator = require('../libs/Tablizator.js')
 
-let controller = new Controller(model)
-
-controller.add({'nombre' : 'Emezeta'})
-controller.add({'nombre' : 'Quesada'})
-// controller.delete('Luka')
-
-
-console.log(controller.get())
+let controller = new Controller(model, new Tablizator())
 
 module.exports = controller

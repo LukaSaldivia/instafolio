@@ -1,0 +1,12 @@
+[
+  {
+    "nombre" : "Fiambres",
+    "foto" : false,
+    "color" : "#b52121"
+  },
+  {
+    "nombre" : "Lácteos",
+    "foto" : false,
+    "color" : "#b52121"
+  }
+]
