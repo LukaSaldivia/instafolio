@@ -1,10 +1,10 @@
 <%- include('components/_tab-menu.ejs') %>
 <main id="app">
-  <h1><%= data.title %></h1>
+  <% data.instances.forEach(instance => { %>
+   <%- include('components/_icon-access.ejs',{ instance }) %>
+   <% }) %>
+  
 </main>
-
-</main>
-
   
 </body>
 </html>

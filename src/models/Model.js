@@ -1,93 +1,103 @@
-const fs = require('fs')
+const fs = require('fs').promises
 const path = require('path')
-const { groupBy , allUniques, getIndex } = require('../libs/anner_arrays')
-
+const { groupBy, allUniques, getIndex } = require('../libs/anner_arrays')
 
 class Model {
-
-
   static DATA = {}
-  static readData = (json) => {
-    Model.DATA = JSON.parse(fs.readFileSync(path.join(__dirname,'jsons',`${json}.json`),'utf8'))   
+
+  static getFilePath(json) {
+    return path.join(__dirname, 'jsons', `${json}.json`)
   }
 
-  static emptyData = () => {
+  static async readData(json) {
+    try {
+      const data = await fs.readFile(Model.getFilePath(json), 'utf8')
+      Model.DATA = JSON.parse(data)
+    } catch (err) {
+      console.error(`Error reading file: ${err.message}`)
+      throw err
+    }
+  }
+
+  static emptyData() {
     Model.DATA = []
   }
 
-  static getData = (json) => {
-    Model.readData(json)
+  static async getData(json) {
+    await Model.readData(json)
     let res = Model.DATA
     Model.emptyData()
     return res
   }
 
-  static getRaw = (json) => {
-    Model.readData(json)
+  static async getRaw(json) {
+    await Model.readData(json)
     let res = Model.DATA
     Model.emptyData()
     return res
   }
 
-  static postData = (json) => {
-    fs.writeFileSync(path.join(__dirname,'jsons',`${json}.json`),JSON.stringify(Model.DATA),'utf8')
-    Model.emptyData()
+  static async postData(json) {
+    try {
+      await fs.writeFile(Model.getFilePath(json), JSON.stringify(Model.DATA), 'utf8')
+      Model.emptyData()
+    } catch (err) {
+      console.error(`Error writing file: ${err.message}`)
+      throw err
+    }
   }
 
-  static updateData = (newer, json) => {
-    Model.getRaw(json)
+  static async updateData(newer, json) {
+    await Model.getRaw(json)
     Model.DATA = newer
-    Model.postData(json)
+    await Model.postData(json)
   }
 
-  constructor(json, idAlias = 'id'){
+  constructor(json, idAlias = 'id') {
     this.json = json
     this.idAlias = idAlias
   }
 
-  get(id = ''){
-    let data = Model.getData(this.json)
+  async get(id = '') {
+    let data = await Model.getData(this.json)
 
     if (id) {
       let map = {}
-  
-      for (let e of data){
-        map[e[this.idAlias]] = {...e}
+
+      for (let e of data) {
+        map[e[this.idAlias]] = { ...e }
       }
 
       return map[id]
-      
     }
     return data
   }
 
-  edit(id="", body){
-    let data = Model.getData(this.json)
-    let index = getIndex(data,id, this.idAlias)
+  async edit(id = "", body) {
+    let data = await Model.getData(this.json)
+    let index = getIndex(data, id, this.idAlias)
     if (index) {
-      Object.assign(data[index],body)
-      Model.updateData(data,this.json)
+      Object.assign(data[index], body)
+      await Model.updateData(data, this.json)
     }
   }
 
-  delete(id=""){
-    let data = Model.getData(this.json)
-    let index = getIndex(data,id, this.idAlias)
+  async delete(id = "") {
+    let data = await Model.getData(this.json)
+    let index = getIndex(data, id, this.idAlias)
     if (index) {
-      data.splice(index,1)
-      Model.updateData(data,this.json)
+      data.splice(index, 1)
+      await Model.updateData(data, this.json)
     }
   }
 
-  add(body){
-    let data = Model.getData(this.json)
+  async add(body) {
+    let data = await Model.getData(this.json)
     data.push(body)
-    if (allUniques(data,this.idAlias)) {
-      Model.updateData(data,this.json)
+    if (allUniques(data, this.idAlias)) {
+      await Model.updateData(data, this.json)
     }
   }
-
-
 }
 
 module.exports = Model

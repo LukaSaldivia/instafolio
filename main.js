@@ -1,15 +1,25 @@
 const createWindow = require('./src/libs/createWindow');
 
 const { app, BrowserWindow, ipcMain } = require('electron')
-const empresas = require('./src/controllers/empresas.controller')
+const Controller = require('./src/controllers/Controller')
 
+
+// instancias
+const empresas = require('./src/controllers/empresas.controller.js')
+const categorias = require('./src/controllers/categorias.controller.js')
+const tiposDeVenta = require('./src/controllers/tiposDeVenta.controller.js')
 
 app.whenReady().then(()=> {
   // createWindow(['components','_table'],true, {
   //   table : empresas.table()
   // })
   createWindow(['index'],true, {
-    title : 'Este es el índice'
+    instances : Controller.instances.map(i => {
+      return {
+        json : i.model.json, 
+        color : i.color
+      }
+    })
   })
 
   app.on('activate', () => {
